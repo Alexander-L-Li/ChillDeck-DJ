@@ -1,4 +1,4 @@
-### Update: 
+# UPDATE
 - Finished 2nd Place (out of 60 projects) in MIT’s 2025 Web Lab Competition &
 - Awarded Best Futuristic UI Design sponsored by Fetch.AI
 
