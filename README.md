@@ -8,10 +8,6 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 # STRUCTURE
 
-## OUR COMPONENT TREE :)
-
-![Web Lab](https://github.com/user-attachments/assets/df762c61-e9bb-45c5-a16d-e97ebf7930db)
-
 ## FRONT END:
 
 - HTML/CSS, Figma for design
@@ -28,6 +24,9 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 - mongoDB
 - user schema (includes name, googleid, chosen theme, chosen profile picture)
 - song schema (includes creator_id, title, filename, filePath, fileType, fileSize, stems, processed, audioshakeAssetId, audioshakeJobIds, stemsStatus, stemsPath, uploadDate)
+
+## OUR COMPONENT TREE :)
+![Web Lab](https://github.com/user-attachments/assets/df762c61-e9bb-45c5-a16d-e97ebf7930db)
 
 happy branching!!
 
