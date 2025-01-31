@@ -2,7 +2,7 @@
 
 # INTRO
 
-hey hey hey! we made this as 3 freshmen, and we met each other through the logarhythms of mit a cappella group, through our love for music. whether it’s singing, or playing an instrument, or listening to songs, music can strengthen many bonds. we hope that with our website, you can be encouraged to _branch out_ (ahaha) and meet new people & try new things. we hope you enjoy chilldeck! built by chill people, for chill people.
+hey hey hey! we made this as 3 freshmen, and we met each other through the mit logarhythms a cappella group, through our love for music. whether it’s singing, or playing an instrument, or listening to songs, music can strengthen many bonds. we hope that with our website, you can be encouraged to _branch out_ (ahaha) and meet new people & try new things. we hope you enjoy chilldeck! built by chill people, for chill people.
 
 # our component tree :)
 
