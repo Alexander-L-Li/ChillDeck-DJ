@@ -9,13 +9,13 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 # STRUCTURE
 
-### FRONT END:
+### FRONT END
 
 - HTML/CSS, Figma for design
 - incorporated mantine libraries
 - responsive design accounted for different screen sizes
 
-### BACKEND:
+### BACKEND
 
 - javaScript (node.js)
 - audioshake API to split songs into 4 stems (bass, drums, melody, vocals)
