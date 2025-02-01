@@ -33,5 +33,5 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 happy branching!!
 
-made with love,
+made with love, <\br>
 alex li, catherine tu, sean wilson
