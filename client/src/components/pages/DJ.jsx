@@ -149,7 +149,6 @@ const DJ = () => {
 
     try {
       const response = await get("/api/songs");
-      // console.log("Fetched songs from server:", response);
 
       const userSongs = await Promise.all(
         response.map(async (song) => {
@@ -160,18 +159,9 @@ const DJ = () => {
             path: song._id,
           };
 
-          // console.log("Processing song:", {
-          //   title: song.title,
-          //   isUserSong: true,
-          //   bpm: song.bpm,
-          //   key: song.key,
-          // });
-
           if (true) {
             try {
-              // console.log(`Starting analysis for song: ${song.title}`);
               const audioUrl = `http://localhost:3000/stems/${song._id}/other_stem.wav`;
-              // console.log("Fetching audio from:", audioUrl);
 
               const response = await fetch(audioUrl);
               if (!response.ok) {
@@ -179,11 +169,9 @@ const DJ = () => {
               }
 
               const arrayBuffer = await response.arrayBuffer();
-              // console.log("Audio file fetched, size:", arrayBuffer.byteLength);
 
               const audioContext = new AudioContext();
               const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-              // console.log("Audio decoded, duration:", audioBuffer.duration);
 
               const audioData = audioBuffer.getChannelData(0);
               const sampleRate = audioBuffer.sampleRate;
@@ -250,7 +238,6 @@ const DJ = () => {
                 return { ...baseSong, bpm, key: "C Major" };
               }
 
-              // console.log(`Could not detect BPM for ${song.title}, using default`);
               return { ...baseSong, bpm: 120, key: "C Major" };
             } catch (error) {
               console.error(`Error analyzing song ${song.title}:`, error);
@@ -260,7 +247,6 @@ const DJ = () => {
           return { ...baseSong, bpm: song.bpm || 120, key: song.key || "" };
         })
       );
-      // console.log("Final processed user songs:", userSongs);
       setTracks((prevTracks) => [...userSongs, ...AVAILABLE_TRACKS]);
     } catch (err) {
       console.error("Error fetching user songs:", err);
