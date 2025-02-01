@@ -1,4 +1,4 @@
-# https://chilldeck.onrender.com
+# ChillDeck DJ (https://chilldeck.onrender.com)
 
 - Finished 2nd Place (out of 60 projects) in MIT’s 2025 Web Lab Competition!!
 - Awarded Best Futuristic UI Design sponsored by Fetch.AI
@@ -9,13 +9,13 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 # STRUCTURE
 
-### FRONT END:
+### FRONT END
 
 - HTML/CSS, Figma for design
 - incorporated mantine libraries
 - responsive design accounted for different screen sizes
 
-### BACKEND:
+### BACKEND
 
 - javaScript (node.js)
 - audioshake API to split songs into 4 stems (bass, drums, melody, vocals)
@@ -33,5 +33,5 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 happy branching!!
 
-made with love,
+made with love, </br>
 alex li, catherine tu, sean wilson
