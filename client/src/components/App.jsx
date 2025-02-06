@@ -26,40 +26,41 @@ function App() {
   }, []);
 
   useEffect(() => {
-    get("/api/whoami").then((user) => {
-      if (user._id) {
-        // they are registed in the database, and currently logged in.
-        setUserId(user._id);
-        // Fetch theme immediately after confirming user
-        get("/api/user", { userid: user._id })
-          .then((userData) => {
-            if (userData.theme) {
-              // Preload the theme before setting it
-              const img = new Image();
-              img.onload = () => setTheme(userData.theme);
-              img.onerror = () => {
+    get("/api/whoami")
+      .then((user) => {
+        if (user._id) {
+          // they are registed in the database, and currently logged in.
+          setUserId(user._id);
+          // Fetch theme immediately after confirming user
+          get("/api/user", { userid: user._id })
+            .then((userData) => {
+              if (userData.theme) {
+                // Preload the theme before setting it
+                const img = new Image();
+                img.onload = () => setTheme(userData.theme);
+                img.onerror = () => {
+                  setTheme(lofibackground);
+                  setIsLoading(false);
+                };
+                img.src = userData.theme;
+              } else {
                 setTheme(lofibackground);
                 setIsLoading(false);
-              };
-              img.src = userData.theme;
-            } else {
+              }
+            })
+            .catch(() => {
               setTheme(lofibackground);
               setIsLoading(false);
-            }
-          })
-          .catch(() => {
-            setTheme(lofibackground);
-            setIsLoading(false);
-          });
-      } else {
+            });
+        } else {
+          setTheme(lofibackground);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
         setTheme(lofibackground);
         setIsLoading(false);
-      }
-    })
-    .catch(() => {
-      setTheme(lofibackground);
-      setIsLoading(false);
-    });
+      });
 
     // Failsafe: if loading takes more than 5 seconds, show the app anyway
     const timeout = setTimeout(() => {
@@ -75,7 +76,6 @@ function App() {
     const decodedCredential = jwt_decode(userToken);
     post("/api/login", { token: userToken })
       .then((user) => {
-        // console.log("login response:", user);
         setUserId(user._id);
         post("/api/initsocket", { socketid: socket.id });
         // Fetch and set theme after successful login
@@ -129,11 +129,7 @@ function App() {
     <MantineProvider>
       <UserContext.Provider value={authContextValue}>
         <ThemeContext.Provider value={{ theme, setTheme }}>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Outlet context={{ userId: userId }} />
-          )}
+          {isLoading ? <Loading /> : <Outlet context={{ userId: userId }} />}
         </ThemeContext.Provider>
       </UserContext.Provider>
     </MantineProvider>

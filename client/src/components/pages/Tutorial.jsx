@@ -39,40 +39,41 @@ const Tutorial = () => {
 
   const updateSpotlightPosition = () => {
     const element = document.querySelector(walkthroughSteps[currentStep].selector);
-    
+
     if (element) {
       const elementRect = element.getBoundingClientRect();
-      
+
       // Special handling for different types of controls
-      const isBpmSlider = element.classList.contains('bpm-slider-container-left') || 
-                         element.classList.contains('bpm-slider-container-right');
-      const isVolumeSlider = element.classList.contains('volume-slider');
-      const isImportBtn = element.classList.contains('import-btn');
-      
+      const isBpmSlider =
+        element.classList.contains("bpm-slider-container-left") ||
+        element.classList.contains("bpm-slider-container-right");
+      const isVolumeSlider = element.classList.contains("volume-slider");
+      const isImportBtn = element.classList.contains("import-btn");
+
       const padding = 5;
       let width = elementRect.width;
       let height = elementRect.height;
       let leftOffset = 0;
       let topOffset = 0;
-      
+
       if (isBpmSlider) {
         width = elementRect.width * 0.15;
         leftOffset = (elementRect.width - width) / 2;
       } else if (isVolumeSlider) {
-        width = elementRect.width * 5;      // 5x width
-        height = elementRect.height * 1.1;  // Keep the shorter height (1.1x)
-        leftOffset = elementRect.width/2 - width/2;
+        width = elementRect.width * 5; // 5x width
+        height = elementRect.height * 1.1; // Keep the shorter height (1.1x)
+        leftOffset = elementRect.width / 2 - width / 2;
       } else if (isImportBtn) {
-        height = elementRect.height * 1.5;  // Make import buttons 1.5x height
-        leftOffset = elementRect.width/2 - width/2;
+        height = elementRect.height * 1.5; // Make import buttons 1.5x height
+        leftOffset = elementRect.width / 2 - width / 2;
         topOffset = elementRect.height * 0.08; // Keep the vertical offset
       }
-      
+
       setSpotlightPosition({
         top: elementRect.top - padding + topOffset,
         left: elementRect.left - padding + leftOffset,
-        width: width + (padding * 2),
-        height: height + (padding * 2)
+        width: width + padding * 2,
+        height: height + padding * 2,
       });
     }
   };
@@ -91,12 +92,12 @@ const Tutorial = () => {
     if (isWalkthrough) {
       updateSpotlightPosition();
       // Update position on scroll and resize
-      window.addEventListener('resize', updateSpotlightPosition);
-      window.addEventListener('scroll', updateSpotlightPosition);
+      window.addEventListener("resize", updateSpotlightPosition);
+      window.addEventListener("scroll", updateSpotlightPosition);
       const interval = setInterval(updateSpotlightPosition, 100);
       return () => {
-        window.removeEventListener('resize', updateSpotlightPosition);
-        window.removeEventListener('scroll', updateSpotlightPosition);
+        window.removeEventListener("resize", updateSpotlightPosition);
+        window.removeEventListener("scroll", updateSpotlightPosition);
         clearInterval(interval);
       };
     }
@@ -110,7 +111,10 @@ const Tutorial = () => {
       if (isWalkthrough) {
         if (e.key === "Escape") {
           setIsWalkthrough(false);
-        } else if ((e.key === "ArrowRight" || e.key === "ArrowDown") && currentStep < walkthroughSteps.length - 1) {
+        } else if (
+          (e.key === "ArrowRight" || e.key === "ArrowDown") &&
+          currentStep < walkthroughSteps.length - 1
+        ) {
           setCurrentStep(currentStep + 1);
         } else if ((e.key === "ArrowLeft" || e.key === "ArrowUp") && currentStep > 0) {
           setCurrentStep(currentStep - 1);
@@ -118,14 +122,14 @@ const Tutorial = () => {
       } else {
         // Normal mode keybinds - matching DJ component
         const key = e.key.toLowerCase();
-        
+
         // Left deck controls
         if (key === "t") {
           setCueOpened(true);
         } else if (key === "g") {
           setPlayOpened(true);
         }
-        
+
         // Effect buttons
         if (key === "q") {
           setEffectsOpened(true); // Bass
@@ -136,14 +140,14 @@ const Tutorial = () => {
         } else if (key === "r") {
           setEffectsOpened(true); // Vocals
         }
-        
+
         // Right deck controls
         if (key === "y") {
           setRightCueOpened(true);
         } else if (key === "h") {
           setRightPlayOpened(true);
         }
-        
+
         // Right effect buttons
         if (key === "u") {
           setRightEffectsOpened(true); // Bass
@@ -154,7 +158,7 @@ const Tutorial = () => {
         } else if (key === "p") {
           setRightEffectsOpened(true); // Vocals
         }
-        
+
         // Center controls
         if (key === "s") {
           setSyncOpened(true);
@@ -166,34 +170,34 @@ const Tutorial = () => {
 
     const handleKeyUp = (e) => {
       if (e.target.tagName === "INPUT") return;
-      
+
       if (!isWalkthrough) {
         const key = e.key.toLowerCase();
-        
+
         // Left deck controls
         if (key === "t") {
           setCueOpened(false);
         } else if (key === "g") {
           setPlayOpened(false);
         }
-        
+
         // Effect buttons
         if (key === "q" || key === "w" || key === "e" || key === "r") {
           setEffectsOpened(false);
         }
-        
+
         // Right deck controls
         if (key === "y") {
           setRightCueOpened(false);
         } else if (key === "h") {
           setRightPlayOpened(false);
         }
-        
+
         // Right effect buttons
         if (key === "u" || key === "i" || key === "o" || key === "p") {
           setRightEffectsOpened(false);
         }
-        
+
         // Center controls
         if (key === "s") {
           setSyncOpened(false);
@@ -205,7 +209,7 @@ const Tutorial = () => {
 
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
-    
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
@@ -251,7 +255,7 @@ const Tutorial = () => {
               {spotlightPosition && (
                 <div className="spotlight-container" onClick={handleSpotlightClick}>
                   <div
-                    className={`walkthrough-spotlight ${hasTransition ? 'with-transition' : ''}`}
+                    className={`walkthrough-spotlight ${hasTransition ? "with-transition" : ""}`}
                     style={{
                       top: spotlightPosition.top,
                       left: spotlightPosition.left,
@@ -266,7 +270,7 @@ const Tutorial = () => {
           <div className="dj-container">
             <TutorialImportAndWaveforms />
             <div className="decks-container">
-              <TutorialLeftControls 
+              <TutorialLeftControls
                 enableHover={!isWalkthrough}
                 cueOpened={cueOpened}
                 setCueOpened={setCueOpened}
@@ -282,7 +286,7 @@ const Tutorial = () => {
                 setEffectsOpened={setEffectsOpened}
                 pressedKey={pressedKey}
               />
-              <TutorialCentralControls 
+              <TutorialCentralControls
                 enableHover={!isWalkthrough}
                 syncOpened={syncOpened}
                 setSyncOpened={setSyncOpened}
@@ -290,7 +294,7 @@ const Tutorial = () => {
                 setResetOpened={setResetOpened}
                 pressedKey={pressedKey}
               />
-              <TutorialRightControls 
+              <TutorialRightControls
                 enableHover={!isWalkthrough}
                 cueOpened={rightCueOpened}
                 setCueOpened={setRightCueOpened}
