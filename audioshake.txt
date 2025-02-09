@@ -1,7 +1,7 @@
 curl -X 'POST' \
  'https://groovy.audioshake.ai/upload/' \
  -H 'accept: application/json' \
- -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImNtNXpubHdtaDBrOTl2MzJ6ZW50djZ0eTMiLCJsaWNlbnNlSWQiOiJjbTV6bm04MWIwcG5vMGpwb2FrbzU2bWU0IiwiaWF0IjoxNzM3MDUxNTA1LCJleHAiOjE4OTQ3MzE1MDV9.50K8Vj9RElGjbQXjh3HqdR4_7r8G-I2pvE2yhjPOSeA' \
+ -H 'Authorization: Bearer [REDACTED]' \
  -H 'Content-Type: multipart/form-data' \
  -F 'file=@/Users/alxli/CS_Projects/Web Lab/ChillDeck/client/../../public/assets/NCS_On&On.mp3;type=audio/mpeg'
 
@@ -22,7 +22,7 @@ Model names: bass, drums, vocals, other
 curl -X 'POST' \
   'https://groovy.audioshake.ai/job/' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImNtNXpubHdtaDBrOTl2MzJ6ZW50djZ0eTMiLCJsaWNlbnNlSWQiOiJjbTV6bm04MWIwcG5vMGpwb2FrbzU2bWU0IiwiaWF0IjoxNzM3MDUxNTA1LCJleHAiOjE4OTQ3MzE1MDV9.50K8Vj9RElGjbQXjh3HqdR4_7r8G-I2pvE2yhjPOSeA' \
+  -H 'Authorization: Bearer [REDACTED]' \
   -H 'Content-Type: application/json' \
   -d '{
   "metadata": {
@@ -37,4 +37,4 @@ curl -X 'POST' \
 curl -X 'GET' \
  'https://groovy.audioshake.ai/job/cm619g57y0qey0jpo0suk4cmo' \
  -H 'accept: application/json' \
- -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImNtNXpubHdtaDBrOTl2MzJ6ZW50djZ0eTMiLCJsaWNlbnNlSWQiOiJjbTV6bm04MWIwcG5vMGpwb2FrbzU2bWU0IiwiaWF0IjoxNzM3MDUxNTA1LCJleHAiOjE4OTQ3MzE1MDV9.50K8Vj9RElGjbQXjh3HqdR4_7r8G-I2pvE2yhjPOSeA'
+ -H 'Authorization: Bearer [REDACTED]'

@@ -17,13 +17,13 @@ hey hey hey! we made this as 3 freshmen, and we met each other through the mit l
 
 ### BACKEND
 
-- javaScript (node.js)
+- JavaScript (node.js)
 - audioshake API to split songs into 4 stems (bass, drums, melody, vocals)
 - wavesurfer.js library to visualize audio waves on the DJ board
 
 ### DATABASE
 
-- mongoDB
+- MongoDB
 - user schema (includes name, googleid, chosen theme, chosen profile picture)
 - song schema (includes creator_id, title, filename, filePath, fileType, fileSize, stems, processed, audioshakeAssetId, audioshakeJobIds, stemsStatus, stemsPath, uploadDate)
 
