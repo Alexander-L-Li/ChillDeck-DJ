@@ -140,118 +140,118 @@ const DJ = () => {
   });
 
   // Fetch user songs function - not working anymore :(
-  const fetchUserSongs = useCallback(async () => {
-    if (!isLoggedIn) {
-      return;
-    }
+  // const fetchUserSongs = useCallback(async () => {
+  //   if (!isLoggedIn) {
+  //     return;
+  //   }
 
-    try {
-      const response = await get("/api/songs");
+  //   try {
+  //     const response = await get("/api/songs");
 
-      const userSongs = await Promise.all(
-        response.map(async (song) => {
-          const baseSong = {
-            isUserSong: true,
-            id: song._id,
-            name: song.title,
-            path: song._id,
-          };
+  //     const userSongs = await Promise.all(
+  //       response.map(async (song) => {
+  //         const baseSong = {
+  //           isUserSong: true,
+  //           id: song._id,
+  //           name: song.title,
+  //           path: song._id,
+  //         };
 
-          if (true) {
-            try {
-              const audioUrl = `http://localhost:3000/stems/${song._id}/other_stem.wav`;
+  //         if (true) {
+  //           try {
+  //             const audioUrl = `http://localhost:3000/stems/${song._id}/other_stem.wav`;
 
-              const response = await fetch(audioUrl);
-              if (!response.ok) {
-                throw new Error(`Failed to fetch audio: ${response.status} ${response.statusText}`);
-              }
+  //             const response = await fetch(audioUrl);
+  //             if (!response.ok) {
+  //               throw new Error(`Failed to fetch audio: ${response.status} ${response.statusText}`);
+  //             }
 
-              const arrayBuffer = await response.arrayBuffer();
+  //             const arrayBuffer = await response.arrayBuffer();
 
-              const audioContext = new AudioContext();
-              const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  //             const audioContext = new AudioContext();
+  //             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-              const audioData = audioBuffer.getChannelData(0);
-              const sampleRate = audioBuffer.sampleRate;
+  //             const audioData = audioBuffer.getChannelData(0);
+  //             const sampleRate = audioBuffer.sampleRate;
 
-              // Analyze only first 30 seconds for efficiency
-              const maxSamples = Math.min(audioData.length, 30 * sampleRate);
-              const samples = audioData.slice(0, maxSamples);
+  //             // Analyze only first 30 seconds for efficiency
+  //             const maxSamples = Math.min(audioData.length, 30 * sampleRate);
+  //             const samples = audioData.slice(0, maxSamples);
 
-              // Calculate energy values in 1024-sample windows
-              const windowSize = 1024;
-              const energies = [];
-              for (let i = 0; i < samples.length - windowSize; i += windowSize) {
-                let energy = 0;
-                for (let j = 0; j < windowSize; j++) {
-                  energy += Math.abs(samples[i + j]);
-                }
-                energies.push(energy);
-              }
+  //             // Calculate energy values in 1024-sample windows
+  //             const windowSize = 1024;
+  //             const energies = [];
+  //             for (let i = 0; i < samples.length - windowSize; i += windowSize) {
+  //               let energy = 0;
+  //               for (let j = 0; j < windowSize; j++) {
+  //                 energy += Math.abs(samples[i + j]);
+  //               }
+  //               energies.push(energy);
+  //             }
 
-              // Normalize energies
-              const maxEnergy = Math.max(...energies);
-              const normalizedEnergies = energies.map((e) => e / maxEnergy);
+  //             // Normalize energies
+  //             const maxEnergy = Math.max(...energies);
+  //             const normalizedEnergies = energies.map((e) => e / maxEnergy);
 
-              // Find peaks (beats)
-              const peaks = [];
-              const minPeakDistance = 12; // Minimum distance between peaks (about 200ms)
-              let lastPeakIndex = -minPeakDistance;
+  //             // Find peaks (beats)
+  //             const peaks = [];
+  //             const minPeakDistance = 12; // Minimum distance between peaks (about 200ms)
+  //             let lastPeakIndex = -minPeakDistance;
 
-              for (let i = 2; i < normalizedEnergies.length - 2; i++) {
-                if (
-                  normalizedEnergies[i] > 0.5 && // Threshold
-                  normalizedEnergies[i] > normalizedEnergies[i - 1] &&
-                  normalizedEnergies[i] > normalizedEnergies[i - 2] &&
-                  normalizedEnergies[i] > normalizedEnergies[i + 1] &&
-                  normalizedEnergies[i] > normalizedEnergies[i + 2] &&
-                  i - lastPeakIndex >= minPeakDistance
-                ) {
-                  peaks.push(i);
-                  lastPeakIndex = i;
-                }
-              }
+  //             for (let i = 2; i < normalizedEnergies.length - 2; i++) {
+  //               if (
+  //                 normalizedEnergies[i] > 0.5 && // Threshold
+  //                 normalizedEnergies[i] > normalizedEnergies[i - 1] &&
+  //                 normalizedEnergies[i] > normalizedEnergies[i - 2] &&
+  //                 normalizedEnergies[i] > normalizedEnergies[i + 1] &&
+  //                 normalizedEnergies[i] > normalizedEnergies[i + 2] &&
+  //                 i - lastPeakIndex >= minPeakDistance
+  //               ) {
+  //                 peaks.push(i);
+  //                 lastPeakIndex = i;
+  //               }
+  //             }
 
-              // Calculate BPM
-              if (peaks.length >= 2) {
-                const intervals = [];
-                for (let i = 1; i < peaks.length; i++) {
-                  intervals.push(peaks[i] - peaks[i - 1]);
-                }
+  //             // Calculate BPM
+  //             if (peaks.length >= 2) {
+  //               const intervals = [];
+  //               for (let i = 1; i < peaks.length; i++) {
+  //                 intervals.push(peaks[i] - peaks[i - 1]);
+  //               }
 
-                // Convert intervals to BPM values
-                const bpmValues = intervals.map(
-                  (interval) => (60 * sampleRate) / (interval * windowSize)
-                );
+  //               // Convert intervals to BPM values
+  //               const bpmValues = intervals.map(
+  //                 (interval) => (60 * sampleRate) / (interval * windowSize)
+  //               );
 
-                // Get median BPM (more robust than mean)
-                const sortedBpms = bpmValues.sort((a, b) => a - b);
-                const medianBpm = Math.round(sortedBpms[Math.floor(sortedBpms.length / 2)]);
+  //               // Get median BPM (more robust than mean)
+  //               const sortedBpms = bpmValues.sort((a, b) => a - b);
+  //               const medianBpm = Math.round(sortedBpms[Math.floor(sortedBpms.length / 2)]);
 
-                // Ensure BPM is in reasonable range (60-140)
-                const bpm =
-                  medianBpm < 60 ? medianBpm * 2 : medianBpm > 140 ? medianBpm / 2 : medianBpm;
+  //               // Ensure BPM is in reasonable range (60-140)
+  //               const bpm =
+  //                 medianBpm < 60 ? medianBpm * 2 : medianBpm > 140 ? medianBpm / 2 : medianBpm;
 
-                // console.log(`Analysis results for ${song.title}:`, { bpm });
-                return { ...baseSong, bpm, key: "C Major" };
-              }
+  //               // console.log(`Analysis results for ${song.title}:`, { bpm });
+  //               return { ...baseSong, bpm, key: "C Major" };
+  //             }
 
-              return { ...baseSong, bpm: 120, key: "C Major" };
-            } catch (error) {
-              console.error(`Error analyzing song ${song.title}:`, error);
-              return { ...baseSong, bpm: 120, key: "C Major" };
-            }
-          }
-          return { ...baseSong, bpm: song.bpm || 120, key: song.key || "" };
-        })
-      );
-      setTracks((prevTracks) => [...userSongs, ...AVAILABLE_TRACKS]);
-    } catch (err) {
-      console.error("Error fetching user songs:", err);
-    }
-  }, [isLoggedIn]);
+  //             return { ...baseSong, bpm: 120, key: "C Major" };
+  //           } catch (error) {
+  //             console.error(`Error analyzing song ${song.title}:`, error);
+  //             return { ...baseSong, bpm: 120, key: "C Major" };
+  //           }
+  //         }
+  //         return { ...baseSong, bpm: song.bpm || 120, key: song.key || "" };
+  //       })
+  //     );
+  //     setTracks((prevTracks) => [...userSongs, ...AVAILABLE_TRACKS]);
+  //   } catch (err) {
+  //     console.error("Error fetching user songs:", err);
+  //   }
+  // }, [isLoggedIn]);
 
-  // Fetch user songs when component mounts or login state changes
+  // Fetch user songs when component mounts or login state changes - not working anymore :(
   useEffect(() => {
     // Reset tracks to default tracks when logged out
     if (!isLoggedIn) {
@@ -789,7 +789,6 @@ const DJ = () => {
       }
     });
 
-    // Reset turntable animations
     const leftTurntable = document.querySelector(".left-deck .turntable");
     const rightTurntable = document.querySelector(".right-deck .turntable");
     if (leftTurntable) leftTurntable.classList.remove("playing");
@@ -815,7 +814,6 @@ const DJ = () => {
       });
     }
 
-    // Reset all state to initial values
     setLeftTrack({
       name: "",
       path: "",
@@ -845,7 +843,6 @@ const DJ = () => {
       },
     });
 
-    // Reset all other state
     setPlaying({ left: false, right: false });
     setCueActive({ left: false, right: false });
     setIsCueing({ left: false, right: false });
