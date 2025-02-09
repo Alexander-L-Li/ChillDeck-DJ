@@ -123,7 +123,6 @@ const createWaveSurfer = (container, options = {}) => {
     partialRender: true,
   });
 
-  // Create and configure the media element
   const audio = document.createElement("audio");
   audio.preservesPitch = true;
   wavesurfer.setMediaElement(audio);
@@ -140,10 +139,9 @@ const DJ = () => {
     right: false,
   });
 
-  // Fetch user songs function
+  // Fetch user songs function - not working anymore :(
   const fetchUserSongs = useCallback(async () => {
     if (!isLoggedIn) {
-      // console.log("User not logged in, skipping user songs fetch");
       return;
     }
 
@@ -230,9 +228,9 @@ const DJ = () => {
                 const sortedBpms = bpmValues.sort((a, b) => a - b);
                 const medianBpm = Math.round(sortedBpms[Math.floor(sortedBpms.length / 2)]);
 
-                // Ensure BPM is in reasonable range (60-180)
+                // Ensure BPM is in reasonable range (60-140)
                 const bpm =
-                  medianBpm < 60 ? medianBpm * 2 : medianBpm > 180 ? medianBpm / 2 : medianBpm;
+                  medianBpm < 60 ? medianBpm * 2 : medianBpm > 140 ? medianBpm / 2 : medianBpm;
 
                 // console.log(`Analysis results for ${song.title}:`, { bpm });
                 return { ...baseSong, bpm, key: "C Major" };
@@ -256,9 +254,9 @@ const DJ = () => {
   // Fetch user songs when component mounts or login state changes
   useEffect(() => {
     // Reset tracks to default tracks when logged out
-    // if (!isLoggedIn) {
-    //   setTracks(AVAILABLE_TRACKS);
-    // }
+    if (!isLoggedIn) {
+      setTracks(AVAILABLE_TRACKS);
+    }
     // // Fetch user songs when logged in
     // fetchUserSongs();
     setTracks(AVAILABLE_TRACKS); // Only use default tracks for now
